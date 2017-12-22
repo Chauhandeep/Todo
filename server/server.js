@@ -23,34 +23,34 @@ app.post('/todos', (req, res) => {
   });
 });
 
-app.get('/todos',(req,res)=>{
-  Todo.find().then((todos)=>{
+app.get('/todos', (req, res) => {
+  Todo.find().then((todos) => {
     res.send({todos});
-  },(e)=>{
+  }, (e) => {
     res.status(400).send(e);
   });
 });
-//GET/todos/113323
-app.get('/todos/:id',(req,res)=>{
+
+app.get('/todos/:id', (req, res) => {
   var id = req.params.id;
-  if(!ObjectID.isValid(id))
-  {
+
+  if (!ObjectID.isValid(id)) {
     return res.status(404).send();
   }
 
-  Todo.findById(id).then((todo)=>{
-    if(!todo){
-      return console.log(res.status(404).send());
+  Todo.findById(id).then((todo) => {
+    if (!todo) {
+      return res.status(404).send();
     }
 
     res.send({todo});
-  }).catch((e)=>{
+  }).catch((e) => {
     res.status(400).send();
-  })
-})
+  });
+});
 
 app.listen(port, () => {
-  console.log(`Started on port ${port}`);
+  console.log(`Started up at port ${port}`);
 });
 
 module.exports = {app};
